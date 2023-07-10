@@ -1,7 +1,6 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -15,5 +14,15 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "mongoose": "^7.0.3"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sheik195/Shopping-E-cart_BackEnd.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sheik195/Shopping-E-cart_BackEnd/issues"
+  },
+  "homepage": "https://github.com/sheik195/Shopping-E-cart_BackEnd#readme",
+  "description": ""
 }
