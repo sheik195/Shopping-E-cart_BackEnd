@@ -8,7 +8,7 @@ const review=require("./Routes/review");
 const order=require("./Routes/order");
 app.use(express.json())
 app.use(cors({
-    origin:"http://localhost:3000",
+    origin:"https://tubular-pixie-28fcd4.netlify.app",
     credentials: true
 }))
 
