@@ -33,7 +33,7 @@ route.post("/adminlogin",async(req,res)=>{
 route.post("/signup",async(req,res)=>{
     try {
         const password=req.body.pwd;
-        const pass=bcrypt.hash(password,"asdfghjjhgfdss");
+        const pass=await bcrypt.hash(password,"asdfghjjhgfdss");
         const data={
             "name":req.body.name,
             "pwd":pass,
