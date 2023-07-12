@@ -49,7 +49,8 @@ route.post("/signup",async(req,res)=>{
         console.log("S1");
     } catch (error) {
         res.json({
-            status: "error"
+            status: "error",
+            err:error
         });
     }
 });
