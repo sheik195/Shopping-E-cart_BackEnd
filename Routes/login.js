@@ -50,7 +50,6 @@ route.post("/signup",async(req,res)=>{
     } catch (error) {
         res.json({
             status: "error",
-            data:pass,
             err:error
         });
     }
