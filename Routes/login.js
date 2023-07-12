@@ -3,6 +3,8 @@ const route=express.Router();
 const app=express();
 const Users=require("../database/Users");
 const AdminUser=require("../database/AdminUser");
+const bcrypt=require('bcrypt');
+const jwt=require("jsonwebtoken");
 app.use(express.json());
 require('../database/db');
 
@@ -30,10 +32,19 @@ route.post("/adminlogin",async(req,res)=>{
 
 route.post("/signup",async(req,res)=>{
     try {
-        const newuser= await Users.create(req.body);
+        const password=req.body.pwd;
+        const pass=bcrypt.hash(password,"asdfghjjhgfdss");
+        const data={
+            "name":req.body.name,
+            "pwd":pass,
+            "phn":req.body.phn,
+            "email":req.body.email}
+        const newuser= await Users.create(data);
+        const token =jwt.sign({userId:newuser._id},"fathima",{ expiresIn: '1d' })
         res.json({
             status: "success",
-            user: newuser
+            user: newuser,
+            token:token
         });
         console.log("S1");
     } catch (error) {
