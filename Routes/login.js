@@ -51,6 +51,7 @@ route.post("/signup",async(req,res)=>{
         res.json({
             status: "error",
             data:pass,
+            data1:"sss",
             err:error
         });
     }
