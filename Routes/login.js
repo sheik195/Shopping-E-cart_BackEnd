@@ -31,29 +31,31 @@ route.post("/adminlogin",async(req,res)=>{
 
 
 route.post("/signup",async(req,res)=>{
-    try {
-        const password=req.body.pwd;
-        const pass=await bcrypt.hash(password,"asdfghjjhgfdss");
-        const data={
-            "name":req.body.name,
-            "pwd":pass,
-            "phn":req.body.phn,
-            "email":req.body.email}
-        const newuser= await Users.create(data);
-        const token =jwt.sign({userId:newuser._id},"fathima",{ expiresIn: '1d' })
-        res.json({
-            status: "success",
-            user: newuser,
-            token:token
-        });
-        console.log("S1");
-    } catch (error) {
-        res.json({
-            status: "error",
-            err:error
-        });
-    }
-});
+try {
+    const password = req.body.pwd;
+    const pass = await bcrypt.hash(password, "asdfghjjhgfdss");
+    const data = {
+        "name": req.body.name,
+        "pwd": pass,
+        "phn": req.body.phn,
+        "email": req.body.email
+    };
+    const newuser = await Users.create(data);
+    const token = jwt.sign({ userId: newuser._id }, "fathima", { expiresIn: '1d' });
+    res.json({
+        status: "success",
+        user: newuser,
+        token: token
+    });
+    console.log("S1");
+} catch (error) {
+    console.error("Registration error:", error);
+    res.json({
+        status: "error",
+        err: error
+    });
+}
+
 
 route.post("/login",async(req,res)=>{
     try {
