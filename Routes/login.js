@@ -31,59 +31,64 @@ route.post("/adminlogin",async(req,res)=>{
 
 
 route.post("/signup",async(req,res)=>{
-try {
-    const password = req.body.pwd;
-    const pass = await bcrypt.hash(password, "asdfghjjhgfdss");
-    const data = {
-        "name": req.body.name,
-        "pwd": pass,
-        "phn": req.body.phn,
-        "email": req.body.email
-    };
-    const newuser = await Users.create(data);
-    const token = jwt.sign({ userId: newuser._id }, "fathima", { expiresIn: '1d' });
-    res.json({
-        status: "success",
-        user: newuser,
-        token: token
-    });
-    console.log("S1");
-} catch (error) {
-    console.error("Registration error:", error);
-    res.json({
-        status: "error",
-        err: error
-    });
-}
+    try {
+        console.log(req.body);
+        const password=req.body.pwd;
 
+        const pass=await bcrypt.hash(password,4);
+        const data={
+            "name":req.body.name,
+            "pwd":pass,
+            "phn":req.body.phn,
+            "email":req.body.email}
+        const newuser= await Users.create(data);
+        const token =jwt.sign({userId:newuser._id},"fathima",{ expiresIn: '1d' })
+        res.json({
+            status: "success",
+            user: newuser,
+            token:token
+        });
+    } catch (error) {
+        console.log(error);
+        res.json({
+            status: "error",
+            err:error
+        });
+    }
+});
 
 route.post("/login",async(req,res)=>{
     try {
         const newuser= await Users.find({email:req.body.email});
-        if(newuser===-1){
+        if(!newuser){
         res.json({
             status: "Please Enter Correct Email Id",
             user: newuser
         });
     }
     else{
-        if(newuser[0].pwd==req.body.pwd){
-            res.json({
-                status: "Success",
-                user: newuser
-            });
+        const p=req.body.pwd;
+        const pass=await bcrypt.compare(p,newuser[0].pwd)
+        console.log(pass)
+        if(pass){
+            const token =jwt.sign({userId:newuser._id},"fathima",{ expiresIn: '1d' })
+        res.json({
+            status: "Success",
+            user: newuser,
+            token:token
+        });
         }
         else{
             res.json({
-                status: "Please Enter Correct password",
-                user: newuser
+                status: "Please Enter Correct password"
             });
         }
 
     }
     } catch (error) {
         res.json({
-            status: "error"
+            status: "error",
+            err:error
         });
     }
 });
